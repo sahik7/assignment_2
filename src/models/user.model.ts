@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { IUser } from "../interfaces/user.interface";
+import { IUser, UserMethods, UserModel } from "../interfaces/user.interface";
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUser, UserModel, UserMethods>({
     userId: { type: Number, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -24,6 +24,11 @@ const userSchema = new Schema<IUser>({
         quantity: { type: Number, required: true }
     }],
 });
+
+userSchema.methods.isUserExists = async function (id: string) {
+    const currentUser = await User.findById(id);
+    return currentUser;
+}
 
 const User = model<IUser>('User', userSchema);
 export default User;
