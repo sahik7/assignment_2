@@ -32,7 +32,8 @@ const getFullUsers = async (req: Request, res: Response) => {
 }
 const getSpecificUser = async (req: Request, res: Response) => {
     try {
-        const id = req.params.id;
+        const id = req.params.userId;
+        console.log(id);
         const result = await services.getSpecificUser(id)
         res.status(200).json({
             success: true,
@@ -48,7 +49,7 @@ const getSpecificUser = async (req: Request, res: Response) => {
 const modifyUser = async (req: Request, res: Response) => {
     try {
         const userInfo = req.body;
-        const id = req.params.id;
+        const id = req.params.userId;
         const result = await services.modifyUser(id, userInfo)
         res.status(200).json({
             success: true,
@@ -63,7 +64,7 @@ const modifyUser = async (req: Request, res: Response) => {
 }
 const deleteUser = async (req: Request, res: Response) => {
     try {
-        const id = req.params.id;
+        const id = req.params.userId;
         await services.deleteUser(id)
         res.status(200).json({
             success: true,
