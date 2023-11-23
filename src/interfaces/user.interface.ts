@@ -30,11 +30,8 @@ interface IUser {
     orders: Orders[];
 }
 
+// interface UserModel extends Model<IUser> {
+//     isUserExists(id: string): Promise<IUser | null>;
+// }
 
-interface UserMethods {
-    isUserExists(id: string): Promise<IUser | null>;
-}
-
-type UserModel = Model<IUser, Record<string, never>, UserMethods>;
-
-export { IUser, UserMethods, UserModel };
+export { IUser };
