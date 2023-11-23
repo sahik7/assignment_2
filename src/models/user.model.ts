@@ -34,10 +34,23 @@ userSchema.pre("save", async function (next) {
 })
 
 
-userSchema.post("save", function () {
-
+userSchema.post("save", function (doc, next) {
+    this.set('password', undefined);
+    this.set('orders', undefined);
+    this.set('__v', undefined);
+    next()
 })
 
+
+// Query Middleware
+userSchema.pre("find", function (next) {
+    this.find().projection({ username: 1, fullName: 1, age: 1, email: 1, address: 1, _id: 0 })
+    next()
+})
+userSchema.pre("findOne", function (next) {
+    this.findOne().projection({ password: 0, orders: 0, _id: 0, __v: 0 })
+    next()
+})
 
 // userSchema.statics.isUserExists = async function (id: string) {
 //     const currentUser = await User.findOne({ id })
