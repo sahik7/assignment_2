@@ -85,11 +85,17 @@ const deleteUser = async (req: Request, res: Response) => {
 }
 
 
-// Create Orders
+// Create Order
 const addOrder = async (req: Request, res: Response) => {
     try {
         const id = req.params.userId;
-        await services.addOrders(id)
+        const singleOrder = req.body;
+        console.log(singleOrder)
+        const user = await services.addOrders(id, singleOrder)
+        // const allOrders = user?.orders;
+        user?.orders.push(singleOrder)
+
+
         res.status(200).json({
             success: true,
             message: "Order created successfully",
@@ -112,7 +118,26 @@ const getAllOrder = async (req: Request, res: Response) => {
         res.status(200).json({
             success: true,
             message: "Order fetched successfully!",
-            data: orders?.orders
+            data: orders
+        })
+
+    } catch (error: any) {
+        console.log(error);
+        res.status(500).json({ success: "failed", message: error.message || "something went wrong" })
+    }
+}
+
+
+
+// Get Total Price
+const getTotalPrice = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.userId;
+        const total = await services.totalPrice(id)
+        res.status(200).json({
+            success: true,
+            message: "Total price calculated successfully!",
+            data: total
         })
 
     } catch (error: any) {
@@ -128,5 +153,6 @@ export const userController = {
     modifyUser,
     deleteUser,
     addOrder,
-    getAllOrder
+    getAllOrder,
+    getTotalPrice
 }

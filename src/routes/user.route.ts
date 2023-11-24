@@ -27,6 +27,10 @@ userRouter.post("/users/:userId/orders", userController.addOrder)
 userRouter.get("/users/:userId/orders", userController.getAllOrder)
 
 
+// Get the total price of orders
+userRouter.get("/users/:userId/orders/total-price", userController.getTotalPrice)
+
+
 
 export const userRoutes = {
     userRouter

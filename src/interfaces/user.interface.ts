@@ -1,5 +1,3 @@
-import { Model } from "mongoose";
-
 interface Address {
     street: string;
     city: string;
