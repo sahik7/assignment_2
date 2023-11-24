@@ -1,17 +1,11 @@
 import { Schema, model } from "mongoose";
-import { IUser, Order } from "./user.interface";
 import bcrypt from "bcrypt";
 import config from "../../../config";
-
-const orderSchema = new Schema<Order>({
-    productName: { type: String, required: true },
-    price: { type: Number, required: true },
-    quantity: { type: Number, required: true }
-}, { _id: false });
+import { IUser, UserModel } from "./user.interface";
 
 
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUser, UserModel>({
     userId: { type: Number, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -28,9 +22,18 @@ const userSchema = new Schema<IUser>({
         city: { type: String, required: true },
         country: { type: String, required: true }
     },
-    orders: [orderSchema]
+    orders: [{
+        productName: { type: String, required: true },
+        price: { type: Number, required: true },
+        quantity: { type: Number, required: true }
+    }]
 });
 
+userSchema.statics.isUserExists = async function (userId: number) {
+    const currentUser = await User.findOne({ userId })
+    console.log(currentUser)
+    return currentUser;
+}
 
 
 
@@ -50,16 +53,4 @@ userSchema.post("save", function (doc, next) {
 
 
 
-
-
-
-// userSchema.statics.isUserExists = async function (id: string) {
-//     const currentUser = await User.findOne({ id })
-//     console.log(currentUser)
-//     return currentUser;
-// }
-
-
-const User = model<IUser>('User', userSchema);
-const Order = model<Order>('Order', orderSchema);
-export { User, Order };
+export const User = model<IUser, UserModel>('User', userSchema);

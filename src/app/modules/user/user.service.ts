@@ -1,10 +1,13 @@
-import mongoose from "mongoose";
+
 import { IUser } from "./user.interface";
 import { User } from "./user.model";
 
 // Upload One user
 const createNewUser = async (userInfo: IUser): Promise<IUser> => {
     const result = await User.create(userInfo)
+    if (await User.isUserExists(userInfo.userId)) {
+        throw new Error(`User ${userInfo.userId} already exists`)
+    }
     return result;
 }
 
