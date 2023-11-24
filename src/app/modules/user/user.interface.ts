@@ -9,7 +9,7 @@ interface FullName {
     lastName: string;
 }
 
-interface Orders {
+interface Order {
     productName: string;
     price: number;
     quantity: number;
@@ -25,11 +25,11 @@ interface IUser {
     isActive: boolean;
     hobbies: string[];
     address: Address;
-    orders: Orders[];
+    orders: Order[];
 }
 
 // interface UserModel extends Model<IUser> {
 //     isUserExists(id: string): Promise<IUser | null>;
 // }
 
-export { IUser };
+export { IUser, Order };

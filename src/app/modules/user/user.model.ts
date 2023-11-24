@@ -1,7 +1,14 @@
 import { Schema, model } from "mongoose";
-import { IUser } from "../interfaces/user.interface";
+import { IUser, Order } from "./user.interface";
 import bcrypt from "bcrypt";
-import config from "../config";
+import config from "../../../config";
+
+const orderSchema = new Schema<Order>({
+    productName: { type: String, required: true },
+    price: { type: Number, required: true },
+    quantity: { type: Number, required: true }
+}, { _id: false });
+
 
 
 const userSchema = new Schema<IUser>({
@@ -21,12 +28,10 @@ const userSchema = new Schema<IUser>({
         city: { type: String, required: true },
         country: { type: String, required: true }
     },
-    orders: [{
-        productName: { type: String, required: true },
-        price: { type: Number, required: true },
-        quantity: { type: Number, required: true }
-    }],
+    orders: [orderSchema]
 });
+
+
 
 
 userSchema.pre("save", async function (next) {
@@ -43,17 +48,8 @@ userSchema.post("save", function (doc, next) {
 })
 
 
-// Query Middleware
-// userSchema.pre("find", function (next) {
-//     this.select({ username: 1, fullName: 1, age: 1, email: 1, address: 1, _id: 0 })
-//     next()
-// })
 
 
-// userSchema.pre("findOne", function (next) {
-//     this.select({ password: 0, orders: 0, _id: 0, __v: 0 })
-//     next()
-// })
 
 
 
@@ -65,4 +61,5 @@ userSchema.post("save", function (doc, next) {
 
 
 const User = model<IUser>('User', userSchema);
-export default User;
+const Order = model<Order>('Order', orderSchema);
+export { User, Order };

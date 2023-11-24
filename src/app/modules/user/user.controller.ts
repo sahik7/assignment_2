@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { services } from "../services/user.service";
-import { userJoiSchema } from "../validation/user.validate";
+import { services } from "./user.service";
+import { userJoiSchema } from "../../../validation/user.validate";
 
 
 
@@ -40,7 +40,8 @@ const getFullUsers = async (req: Request, res: Response) => {
 }
 const getSpecificUser = async (req: Request, res: Response) => {
     try {
-        const id = req.params.userId;
+        const id = parseInt(req.params.userId);
+        console.log(id)
         const result = await services.getSpecificUser(id)
         res.status(200).json({
             success: true,
@@ -55,7 +56,7 @@ const getSpecificUser = async (req: Request, res: Response) => {
 const modifyUser = async (req: Request, res: Response) => {
     try {
         const userInfo = req.body;
-        const id = req.params.userId;
+        const id = parseInt(req.params.userId);
         const result = await services.modifyUser(id, userInfo)
         res.status(200).json({
             success: true,
@@ -70,7 +71,7 @@ const modifyUser = async (req: Request, res: Response) => {
 }
 const deleteUser = async (req: Request, res: Response) => {
     try {
-        const id = req.params.userId;
+        const id = parseInt(req.params.userId);
         await services.deleteUser(id)
         res.status(200).json({
             success: true,
@@ -88,7 +89,7 @@ const deleteUser = async (req: Request, res: Response) => {
 // Create Order
 const addOrder = async (req: Request, res: Response) => {
     try {
-        const id = req.params.userId;
+        const id = parseInt(req.params.userId);
         const singleOrder = req.body;
         console.log(singleOrder)
         const user = await services.addOrders(id, singleOrder)
@@ -113,12 +114,12 @@ const addOrder = async (req: Request, res: Response) => {
 // Get All Orders
 const getAllOrder = async (req: Request, res: Response) => {
     try {
-        const id = req.params.userId;
+        const id = parseInt(req.params.userId);
         const orders = await services.allOrders(id)
         res.status(200).json({
             success: true,
             message: "Order fetched successfully!",
-            data: orders
+            data: orders[0]
         })
 
     } catch (error: any) {
@@ -132,8 +133,9 @@ const getAllOrder = async (req: Request, res: Response) => {
 // Get Total Price
 const getTotalPrice = async (req: Request, res: Response) => {
     try {
-        const id = req.params.userId;
+        const id = parseInt(req.params.userId);
         const total = await services.totalPrice(id)
+        console.log(total)
         res.status(200).json({
             success: true,
             message: "Total price calculated successfully!",

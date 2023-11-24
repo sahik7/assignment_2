@@ -1,6 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import { userRoutes } from "./routes/user.route";
+import { userRoutes } from "./app/modules/user/user.route";
 const app: Application = express()
 
 // parsers
