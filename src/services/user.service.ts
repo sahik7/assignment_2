@@ -9,7 +9,7 @@ const createNewUser = async (userInfo: IUser): Promise<IUser> => {
 
 // Get all users
 const getFullUsers = async (): Promise<IUser[]> => {
-    const result = await User.find()
+    const result = await User.find({}).select({ username: 1, fullName: 1, age: 1, email: 1, address: 1, _id: 0 })
     return result;
 }
 
@@ -32,10 +32,24 @@ const modifyUser = async (id: string, userInfo: IUser): Promise<IUser | null> =>
 }
 
 
-
 // Delete a particular user
 const deleteUser = async (id: string): Promise<IUser | null> => {
     const result = await User.findByIdAndDelete(id)
+    return result;
+}
+
+
+
+// Add A Particular Order
+const addOrders = async (id: string): Promise<IUser | null> => {
+    const result = await User.findById(id)
+    return result;
+}
+
+// Add A Particular Order
+const allOrders = async (id: string): Promise<IUser | null> => {
+    const result = await User.findById(id)
+    console.log(result)
     return result;
 }
 
@@ -45,7 +59,9 @@ export const services = {
     getFullUsers,
     getSpecificUser,
     modifyUser,
-    deleteUser
+    deleteUser,
+    addOrders,
+    allOrders
 
 
 }

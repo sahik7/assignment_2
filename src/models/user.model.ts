@@ -3,6 +3,7 @@ import { IUser } from "../interfaces/user.interface";
 import bcrypt from "bcrypt";
 import config from "../config";
 
+
 const userSchema = new Schema<IUser>({
     userId: { type: Number, required: true, unique: true },
     username: { type: String, required: true, unique: true },
@@ -12,7 +13,7 @@ const userSchema = new Schema<IUser>({
         lastName: { type: String, required: true }
     },
     age: { type: Number, required: true },
-    email: { type: String, required: true, lowercase: true },
+    email: { type: String, required: true },
     isActive: { type: Boolean, required: true },
     hobbies: { type: [String], default: [] },
     address: {
@@ -43,14 +44,18 @@ userSchema.post("save", function (doc, next) {
 
 
 // Query Middleware
-userSchema.pre("find", function (next) {
-    this.find().projection({ username: 1, fullName: 1, age: 1, email: 1, address: 1, _id: 0 })
-    next()
-})
-userSchema.pre("findOne", function (next) {
-    this.findOne().projection({ password: 0, orders: 0, _id: 0, __v: 0 })
-    next()
-})
+// userSchema.pre("find", function (next) {
+//     this.select({ username: 1, fullName: 1, age: 1, email: 1, address: 1, _id: 0 })
+//     next()
+// })
+
+
+// userSchema.pre("findOne", function (next) {
+//     this.select({ password: 0, orders: 0, _id: 0, __v: 0 })
+//     next()
+// })
+
+
 
 // userSchema.statics.isUserExists = async function (id: string) {
 //     const currentUser = await User.findOne({ id })

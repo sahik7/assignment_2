@@ -18,6 +18,16 @@ userRouter.put("/users/:userId", userController.modifyUser)
 // Delete One User
 userRouter.delete("/users/:userId", userController.deleteUser)
 
+
+// Orders Route
+userRouter.post("/users/:userId/orders", userController.addOrder)
+
+
+// Get All Orders
+userRouter.get("/users/:userId/orders", userController.getAllOrder)
+
+
+
 export const userRoutes = {
     userRouter
 } 
