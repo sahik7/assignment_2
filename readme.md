@@ -17,7 +17,7 @@
 - **step 7** - Add these endpoint api to get your desired results.
 
 | Results | Api |
-| ------- | --- |
+| ------------ |
 | **User Related Apis** |
 | Create a user  | http://localhost:5000/users  |
 | Get a user  | http://localhost:5000/users  |
