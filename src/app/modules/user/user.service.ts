@@ -66,7 +66,13 @@ const deleteUser = async (userId: number): Promise<IUser | null> => {
 
 
 // Create Order
-const addOrders = async (userId: number, orderData: Object[]): Promise<IUser | null> => {
+const addOrders = async (userId: number, orderData: unknown[]): Promise<IUser | null> => {
+    if (await User.isUserExists(userId) === null) {
+        const error = new Error("User not found");
+        (error as any).status = 404;
+        (error as any).description = "User not found!";
+        throw error;
+    }
     const result = await User.findOneAndUpdate({ userId }, { $push: { orders: orderData } },
         { new: true, runValidators: true })
     return result;
@@ -74,6 +80,12 @@ const addOrders = async (userId: number, orderData: Object[]): Promise<IUser | n
 
 // Get All Orders
 const allOrders = async (userId: number): Promise<any | null> => {
+    if (await User.isUserExists(userId) === null) {
+        const error = new Error("User not found");
+        (error as any).status = 404;
+        (error as any).description = "User not found!";
+        throw error;
+    }
     const result = await User.aggregate([
         { $match: { userId } },
         { $unwind: "$orders" }, {
@@ -97,6 +109,12 @@ const allOrders = async (userId: number): Promise<any | null> => {
 
 // Add A Particular Order
 const totalPrice = async (userId: number): Promise<any[] | null> => {
+    if (await User.isUserExists(userId) === null) {
+        const error = new Error("User not found");
+        (error as any).status = 404;
+        (error as any).description = "User not found!";
+        throw error;
+    }
     const result = await User.aggregate([
         { $match: { userId } },
         { $unwind: '$orders' },

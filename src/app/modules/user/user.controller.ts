@@ -4,7 +4,7 @@ import { userJoiSchema } from "../../../validation/user.validate";
 
 
 
-
+//////////////////////////  User Section ///////////////////////
 const createNewUser = async (req: Request, res: Response) => {
     try {
         const userInfo = req.body;
@@ -29,6 +29,8 @@ const createNewUser = async (req: Request, res: Response) => {
         });
     }
 }
+
+
 const getFullUsers = async (req: Request, res: Response) => {
     try {
         const result = await services.getFullUsers()
@@ -39,14 +41,14 @@ const getFullUsers = async (req: Request, res: Response) => {
         })
 
     } catch (error: any) {
-        console.log(error);
         res.status(500).json({ success: false, message: error.message || "something went wrong" })
     }
 }
+
+
 const getSpecificUser = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.userId);
-        console.log(id)
         const result = await services.getSpecificUser(id)
         res.status(200).json({
             success: true,
@@ -63,6 +65,8 @@ const getSpecificUser = async (req: Request, res: Response) => {
         });
     }
 }
+
+
 const modifyUser = async (req: Request, res: Response) => {
     try {
         const userInfo = req.body;
@@ -83,6 +87,8 @@ const modifyUser = async (req: Request, res: Response) => {
         });
     }
 }
+
+
 const deleteUser = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.userId);
@@ -104,14 +110,19 @@ const deleteUser = async (req: Request, res: Response) => {
 }
 
 
+
+
+
+
+
+
+//////////////////////////  Order Section ///////////////////////
 // Create Order
 const addOrder = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.userId);
         const singleOrder = req.body;
-        console.log(singleOrder)
         const user = await services.addOrders(id, singleOrder)
-        // const allOrders = user?.orders;
         user?.orders.push(singleOrder)
 
 
@@ -122,11 +133,14 @@ const addOrder = async (req: Request, res: Response) => {
         })
 
     } catch (error: any) {
-        console.log(error);
-        res.status(500).json({ success: false, message: error.message || "something went wrong" })
+        res.status(404).json({
+            success: false, message: error.message, error: {
+                code: error.status,
+                description: error.description || error.message
+            }
+        });
     }
 }
-
 
 
 // Get All Orders
@@ -141,11 +155,14 @@ const getAllOrder = async (req: Request, res: Response) => {
         })
 
     } catch (error: any) {
-        console.log(error);
-        res.status(500).json({ success: false, message: error.message || "something went wrong" })
+        res.status(404).json({
+            success: false, message: error.message, error: {
+                code: error.status,
+                description: error.description || error.message
+            }
+        });
     }
 }
-
 
 
 // Get Total Price
@@ -153,7 +170,6 @@ const getTotalPrice = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.userId);
         const total = await services.totalPrice(id)
-        console.log(total)
         res.status(200).json({
             success: true,
             message: "Total price calculated successfully!",
@@ -161,10 +177,18 @@ const getTotalPrice = async (req: Request, res: Response) => {
         })
 
     } catch (error: any) {
-        console.log(error);
-        res.status(500).json({ success: false, message: error.message || "something went wrong" })
+        res.status(404).json({
+            success: false, message: error.message, error: {
+                code: error.status,
+                description: error.description || error.message
+            }
+        });
     }
 }
+
+
+
+
 
 export const userController = {
     createNewUser,
