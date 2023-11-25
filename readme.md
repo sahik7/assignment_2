@@ -27,6 +27,10 @@
 | **Orders Related Apis** |
 | Get create an order  | http://localhost:5000/users/:userId/orders  |
 | Get all the orders done by an user   | http://localhost:5000/users/:userId/orders  |
+<<<<<<< HEAD
 | Get the total amount of all the orders done by an user  | http://localhost:5000/users/:userId/orders/total-price  |
+=======
+| Get the total ammount of all the orders done by an user  | http://localhost:5000/users/:userId/orders/total-price  |
+>>>>>>> f80cc314ec5b5077fc0622a9c69233a4def24407
 
 
