@@ -12,7 +12,7 @@
 
 - **step 5** - The project is good to go. In the terminal write ```npm run dev``` to start the server and check for a message which includes **Example app listening on port 5000** confirms that the server is working properly.
 
-- **step 6** - Now give a final check to the browser. In the link address bar write ```http://localhost:5000/``` an if the browser shows ```Hello World``` then everything is working properly.
+- **step 6** - Now give a final check to the browser. In the link address bar write ```http://localhost:5000/```. If the browser shows ```Hello World``` then everything is working properly.
 
 - **step 7** - Add these endpoint api to get your desired results.
 
