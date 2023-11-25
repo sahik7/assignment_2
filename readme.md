@@ -19,8 +19,8 @@
 | Results | Api |
 | -------|----- |
 | **User Related Apis** |
-| Create a user  | http://localhost:5000/users  |
-| Get a user  | http://localhost:5000/users  |
+| Create an user  | http://localhost:5000/users  |
+| Get an user  | http://localhost:5000/users  |
 | Get single user by userId  | http://localhost:5000/users/:userId  |
 | Get update an user by userId  | http://localhost:5000/users/:userId  |
 | Get delete an user by userId  | http://localhost:5000/users/:userId  |
