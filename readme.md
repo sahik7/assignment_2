@@ -18,7 +18,15 @@
 
 | Results | Api |
 | ------- | --- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+| **User Related Apis** |
+| Create a user  | http://localhost:5000/users  |
+| Get a user  | http://localhost:5000/users  |
+| Get single user by userId  | http://localhost:5000/users/:userId  |
+| Get update an user by userId  | http://localhost:5000/users/:userId  |
+| Get delete an user by userId  | http://localhost:5000/users/:userId  |
+| **Orders Related Apis** |
+| Get create an order  | http://localhost:5000/users/:userId/orders  |
+| Get all the orders done by an user   | http://localhost:5000/users/:userId/orders  |
+| Get the total ammount of all the orders done by an user  | http://localhost:5000/users/:userId/orders/total-price  |
 
 
