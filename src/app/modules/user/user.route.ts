@@ -19,14 +19,12 @@ userRouter.put("/users/:userId", userController.modifyUser)
 userRouter.delete("/users/:userId", userController.deleteUser)
 
 
+
+
 // Orders Route
 userRouter.post("/users/:userId/orders", userController.addOrder)
-
-
 // Get All Orders
 userRouter.get("/users/:userId/orders", userController.getAllOrder)
-
-
 // Get the total price of orders
 userRouter.get("/users/:userId/orders/total-price", userController.getTotalPrice)
 
