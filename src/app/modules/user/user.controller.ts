@@ -12,7 +12,7 @@ const createNewUser = async (req: Request, res: Response) => {
         const result = await services.createNewUser(value)
 
         if (error) {
-            res.status(500).json({ success: "failed", message: error.message || "something went wrong" })
+            res.status(500).json({ success: false, message: error.message || "something went wrong" })
         }
         res.status(201).json({
             success: true,
@@ -21,7 +21,12 @@ const createNewUser = async (req: Request, res: Response) => {
         })
 
     } catch (error: any) {
-        res.status(500).json({ success: "failed", message: error.message || "something went wrong" })
+        res.status(422).json({
+            success: false, message: error.message, error: {
+                code: error.status,
+                description: error.description || error.message
+            }
+        });
     }
 }
 const getFullUsers = async (req: Request, res: Response) => {
@@ -35,7 +40,7 @@ const getFullUsers = async (req: Request, res: Response) => {
 
     } catch (error: any) {
         console.log(error);
-        res.status(500).json({ success: "failed", message: error.message || "something went wrong" })
+        res.status(500).json({ success: false, message: error.message || "something went wrong" })
     }
 }
 const getSpecificUser = async (req: Request, res: Response) => {
@@ -50,7 +55,12 @@ const getSpecificUser = async (req: Request, res: Response) => {
         })
 
     } catch (error: any) {
-        res.status(500).json({ success: "failed", message: error.message || "something went wrong" })
+        res.status(404).json({
+            success: false, message: error.message, error: {
+                code: error.status,
+                description: error.description || error.message
+            }
+        });
     }
 }
 const modifyUser = async (req: Request, res: Response) => {
@@ -65,8 +75,12 @@ const modifyUser = async (req: Request, res: Response) => {
         })
 
     } catch (error: any) {
-        console.log(error);
-        res.status(500).json({ success: "failed", message: error.message || "something went wrong" })
+        res.status(404).json({
+            success: false, message: error.message, error: {
+                code: error.status,
+                description: error.description || error.message
+            }
+        });
     }
 }
 const deleteUser = async (req: Request, res: Response) => {
@@ -80,8 +94,12 @@ const deleteUser = async (req: Request, res: Response) => {
         })
 
     } catch (error: any) {
-        console.log(error);
-        res.status(500).json({ success: "failed", message: error.message || "something went wrong" })
+        res.status(404).json({
+            success: false, message: error.message, error: {
+                code: error.status,
+                description: error.description || error.message
+            }
+        });
     }
 }
 
@@ -105,7 +123,7 @@ const addOrder = async (req: Request, res: Response) => {
 
     } catch (error: any) {
         console.log(error);
-        res.status(500).json({ success: "failed", message: error.message || "something went wrong" })
+        res.status(500).json({ success: false, message: error.message || "something went wrong" })
     }
 }
 
@@ -124,7 +142,7 @@ const getAllOrder = async (req: Request, res: Response) => {
 
     } catch (error: any) {
         console.log(error);
-        res.status(500).json({ success: "failed", message: error.message || "something went wrong" })
+        res.status(500).json({ success: false, message: error.message || "something went wrong" })
     }
 }
 
@@ -144,7 +162,7 @@ const getTotalPrice = async (req: Request, res: Response) => {
 
     } catch (error: any) {
         console.log(error);
-        res.status(500).json({ success: "failed", message: error.message || "something went wrong" })
+        res.status(500).json({ success: false, message: error.message || "something went wrong" })
     }
 }
 

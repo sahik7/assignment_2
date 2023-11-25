@@ -4,10 +4,13 @@ import { User } from "./user.model";
 
 // Upload One user
 const createNewUser = async (userInfo: IUser): Promise<IUser> => {
-    const result = await User.create(userInfo)
     if (await User.isUserExists(userInfo.userId)) {
-        throw new Error(`User ${userInfo.userId} already exists`)
+        const error = new Error("User already exists");
+        (error as any).status = 422;
+        (error as any).description = "User already exists";
+        throw error;
     }
+    const result = await User.create(userInfo)
     return result;
 }
 
@@ -20,6 +23,12 @@ const getFullUsers = async (): Promise<IUser[]> => {
 
 // Get a specific user with id
 const getSpecificUser = async (userId: number): Promise<IUser | null> => {
+    if (await User.isUserExists(userId) === null) {
+        const error = new Error("User not found");
+        (error as any).status = 404;
+        (error as any).description = "User not found!";
+        throw error;
+    }
     const result = await User.findOne({ userId }).select({ password: 0, _id: 0, orders: 0, __v: 0 })
     return result;
 }
@@ -28,6 +37,12 @@ const getSpecificUser = async (userId: number): Promise<IUser | null> => {
 
 // Update specific user with id
 const modifyUser = async (userId: number, userInfo: IUser): Promise<IUser | null> => {
+    if (await User.isUserExists(userId) === null) {
+        const error = new Error("User not found");
+        (error as any).status = 404;
+        (error as any).description = "User not found!";
+        throw error;
+    }
     const result = await User.findOneAndUpdate({ userId }, userInfo, {
         new: true,
         runValidators: true
@@ -38,6 +53,12 @@ const modifyUser = async (userId: number, userInfo: IUser): Promise<IUser | null
 
 // Delete a particular user
 const deleteUser = async (userId: number): Promise<IUser | null> => {
+    if (await User.isUserExists(userId) === null) {
+        const error = new Error("User not found");
+        (error as any).status = 404;
+        (error as any).description = "User not found!";
+        throw error;
+    }
     const result = await User.findOneAndDelete({ userId })
     return result;
 }
